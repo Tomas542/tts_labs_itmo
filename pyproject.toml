@@ -1,0 +1,99 @@
+[project]
+name = "tts-labs-itmo"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Tomas245", email = "tomas.yudin@gmail.com" }
+]
+requires-python = ">=3.10"
+dependencies = [
+    "ipykernel>=7.3.0",
+    "matplotlib>=3.7",
+    "numpy>=1.26",
+    "pandas>=2.0",
+    "praatio>=6.0",
+    "pymorphy3>=2.0",
+    "pytest>=8.0",
+    "pyyaml>=6.0",
+    "scikit-learn>=1.3",
+]
+
+[tool.ruff]
+line-length = 120
+[tool.ruff.format]
+indent-style = "space"
+quote-style = "double"
+skip-magic-trailing-comma = false
+docstring-code-line-length = 80
+docstring-code-format = true
+[tool.ruff.lint]
+select = [
+    "A",      # Built-ins shadowing
+    "ANN",    # Annotations
+    "ARG",    # Unused arguments
+    "B",      # Bugs
+    "BLE",    # Exception specified
+    "C4",     # Catch incorrect use of comprehensions
+    "C90",    # Statement complexity
+    "COM",    # Commas
+    "DOC",    # Docsting fomatting
+    "DTZ",    # Datetime use
+    "E",      # Errors
+    "EM",     # Raising exceptions
+    "ERA",    # Commented code
+    "F",      # Formats
+    "FA",     # future annotations
+    "FURB",   # Refubishing
+    "G",      # Logging formatting
+    "I",      # Imports
+    "ICN",    # Use common import conventions
+    "INP",    # __init__.py required
+    "ISC",    # String concatenations
+    "LOG",    # Logging
+    "NPY",    # NumPy things
+    "PD",     # Pandas things
+    "PERF",   # Some performance issues
+    "PGH",    # pygrep parsed
+    "PIE",    # Unnecessary operation
+    "PL",     # Pylint
+    "PLE",    # Errors
+    "PLR",    # Refactor
+    "PLW",    # Warnings
+    "PTH",    # Pathlib instead of os.path
+    "PYI",    # Type hints stubs
+    "Q",      # Quotes
+    "RET",    # Return practices
+    "RSE",    # No comment - no parantesis in raise
+    "S",      # Bandit usage
+    "SIM",    # Code simplifications
+    "SLF",    # No private member access
+    "SLOT",   # __slot__ in certain classes
+    "T10",    # No debugger calls in commited code
+    "TC",     # type annotations
+    "TD",     # TODO tags
+    "TID253", # module level imports
+    "UP",     # Warn if certain things can changed due to newer Python versions
+    "W",      # Whitespace warnings
+    "YTT",    # flake8-2020
+]
+ignore = [
+    "ANN002",  # unannotated *args
+    "ANN003",  # unannotated **kwargs
+    "ANN401",  # allow typing.Any
+    "E741",    # ambigous names, like l and other
+    "N803",    # Argument names not only lowercase
+    "NPY002",  # numpy.random allowed
+    "PERF203", # try-except in loop
+    "PLC0415", # not top-level imports
+    "PLR09",   # too many rules have no specified limits, so either useless, or unusable
+    "PLR2004", # allow magic numbers for comparison
+    "RET504",  # Assign before return
+    "S101",    # allow asserts
+    "TD002",   # no author in TODO
+    "TD003",   # no links in TODO
+]
+task-tags = [ "TODO" ]
+[tool.ruff.lint.extend-per-file-ignores]
+"src/utils.py" = [ "I001" ]  # Impots not on top for monkey patch
+"*.ipynb" = [ "T201" ]  # Print inside jupyter notebooks
