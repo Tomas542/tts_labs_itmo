@@ -106,6 +106,8 @@ def read_alignment(align_root: str, keep: set[str] | None, keep_sil=False) -> li
         fold = 'test' if int(utterance_id.split('_')[0]) % TEST_EVERY == 0 else 'train'
 
         token_id = 0
+        utterance_rows = []
+        has_spn = False
         for entry in word_tier.entries:
             if entry.label == '':
                 if not keep_sil:
@@ -113,14 +115,20 @@ def read_alignment(align_root: str, keep: set[str] | None, keep_sil=False) -> li
                 current_phones = '<SIL>'
             else:
                 current_phones = ' '.join(phones_of_token(phones, entry.start, entry.end))
-            rows.append({
+                if 'spn' in current_phones.split():
+                    has_spn = True
+            token = SIL if entry.label == '' else unicodedata.normalize('NFC', entry.label).lower()
+            utterance_rows.append({
                 'id': utterance_id,
                 'token_id': token_id,
-                'token': unicodedata.normalize('NFC', entry.label),
+                'token': token,
                 'phones': current_phones,
                 'set': fold,
             })
             token_id += 1
+        if has_spn:
+            continue
+        rows.extend(utterance_rows)
     return rows
 
 
