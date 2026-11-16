@@ -51,7 +51,7 @@ def parse_args():
                    help="explicit checkpoint; default is the newest best_model_*.pth")
     p.add_argument("--eval-set", type=Path, default=Path("data/eval_sentences.csv"),
                    help="id|text|phones, the shipped evaluation sentences")
-    p.add_argument("--wavs", type=Path, default=Path("../../data/RUSLAN/RUSLAN"))
+    p.add_argument("--wavs", type=Path, default=Path("../../data/ruslan_dataset/RUSLAN"))
     p.add_argument("--metadata", type=Path, default=Path("../../data/metadata_phones.csv"),
                    help="training metadata, used only for the constant-mel reference")
     p.add_argument("--limit", type=int, default=None,
@@ -188,7 +188,7 @@ def main() -> None:
     tokenizer, config = TTSTokenizer.init_from_config(config)
     model = ForwardTTS(config, ap, tokenizer, speaker_manager=None)
     model.load_state_dict(torch.load(str(checkpoint), map_location="cpu")["model"])
-    model.eval()
+    model = model.eval().to("cuda")
 
     out = args.run / "eval"
     for sub in ("natural", "copysynth", "model"):

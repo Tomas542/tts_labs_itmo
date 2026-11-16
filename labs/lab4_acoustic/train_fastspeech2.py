@@ -49,12 +49,10 @@ LAB_DIR = Path(__file__).resolve().parent
 PROJECT_DIR = LAB_DIR.parent.parent
 
 EXPERIMENTS = {
-    "baseline_g2p": ("metadata_phones_train.csv", 1e-3, []),
-    "baseline_gt": ("metadata_phones_gt_train.csv", 1e-3, []),
-    "lr3e4_g2p": ("metadata_phones_train.csv", 3e-4, []),
-    "lr5e3_g2p": ("metadata_phones_train.csv", 5e-3, []),
-    "pitch_energy_gt": ("metadata_phones_gt_train.csv", 1e-3, ["--pitch-energy"]),
-    "mfa_dur_gt": ("metadata_phones_gt_mfa_train.csv", 1e-3, ["--durations"]),
+    "g2p": ("metadata_phones_train.csv", 1e-3, []),
+    "gt": ("metadata_phones_gt_train.csv", 1e-3, []),
+    "pitch_energy": ("metadata_phones_gt_train.csv", 1e-3, ["--pitch-energy"]),
+    "mfa_dur": ("metadata_phones_gt_mfa_train.csv", 1e-3, ["--durations"]),
 }
 DEFAULT_CONFIGS = list(EXPERIMENTS)[:5]
 
@@ -64,7 +62,7 @@ def parse_args():
                                 formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--metadata", type=Path, default=Path("../../data/metadata_phones.csv"),
                    help="phone metadata from lab 3: id|text|phones")
-    p.add_argument("--wavs", type=Path, default=Path("../../data/RUSLAN/RUSLAN"),
+    p.add_argument("--wavs", type=Path, default=Path("../../data/ruslan_dataset/RUSLAN/"),
                    help="directory of {id}.wav at 22050 Hz")
     p.add_argument("--phones", type=Path, default=Path("../../common/phones_mfa.txt"),
                    help="the phone inventory; the model vocabulary is built from it")
@@ -73,7 +71,7 @@ def parse_args():
     p.add_argument("--run-name", default="baseline",
                    help="subdirectory under --output; use a different one per experiment")
     p.add_argument("--epochs", type=int, default=1000)
-    p.add_argument("--batch-size", type=int, default=32)
+    p.add_argument("--batch-size", type=int, default=8)
     p.add_argument("--lr", type=float, default=1e-3, help="coqui's Fastspeech2 default, with a NoamLR schedule")
     p.add_argument("--max-audio-seconds", type=float, default=10.0,
                    help="utterances longer than this are dropped; attention is O(n^2)")
