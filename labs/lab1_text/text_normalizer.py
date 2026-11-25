@@ -138,8 +138,8 @@ class TextNormalizer:
         def replace_number(match):
             num_str = match.group(0)
             try:
-                # Преобразование числа в текст на русском
-                return num2words(int(num_str), lang="ru")
+                # The import is the module. The converter is num2words.num2words.
+                return num2words.num2words(int(num_str), lang="ru")
             except Exception as _:
                 return num_str
 
@@ -164,3 +164,5 @@ if __name__ == "__main__":
     assert normalizer.normalize("«цитата»") == '"цитата"', normalizer.normalize("«цитата»")
     assert normalizer.normalize("текст * мусор") == "текст мусор", normalizer.normalize("текст * мусор")
     assert normalizer.normalize("де‑факто") == "де-факто", normalizer.normalize("де‑факто")
+    year = normalizer.normalize("в 1995 г.")
+    assert "1995" not in year, year

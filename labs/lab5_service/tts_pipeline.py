@@ -356,7 +356,10 @@ class TTSPipeline:
         parts = []
         for group in chunk_tokens(with_pauses):
             phones = timed("g2p", self.to_phones, group)
-            if not phones:
+            # A single `<SIL>` still reaches FastSpeech2 when the only token has no
+            # pronunciation. Coqui squeezes a length-1 encoder output and the duration
+            # predictor then sees the wrong axis. No spoken phone means silence.
+            if not any(phone != SIL for phone in phones):
                 continue
             mel = timed("acoustic", self.mel, phones)
             waveform = np.asarray(timed("vocoder", self.vocode, mel), dtype=np.float32).reshape(-1)
