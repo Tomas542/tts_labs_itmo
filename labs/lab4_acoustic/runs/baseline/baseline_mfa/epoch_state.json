@@ -1,0 +1,7 @@
+{
+  "completed_epochs": 100,
+  "last_completed_epoch_index": 99,
+  "global_step": 232300,
+  "checkpoint": "checkpoint_232300.pth",
+  "target_epochs": 100
+}
